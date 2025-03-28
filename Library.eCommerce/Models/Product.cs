@@ -12,11 +12,15 @@ namespace Spring2025_Samples.Models
 
         public string? Name { get; set; }
 
+        public int Quantity { get; set; } = 0;
+
+        public double Price { get; set; } = 0; 
+
         public string? Display
         {
             get
             {
-                return $"{Id}. {Name}";
+                return $"{Id}. {Name}. {Price}. {Quantity}";
             }
         }
 
