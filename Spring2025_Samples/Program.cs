@@ -2,9 +2,9 @@
 //Console.WriteLine("Hello, World!");
 
 using Library.eCommerce.Services;
-using Spring2025_Samples.Models;
 using System;
 using System.Xml.Serialization;
+using Library.eCommerce.Models;
 
 namespace MyApp
 {

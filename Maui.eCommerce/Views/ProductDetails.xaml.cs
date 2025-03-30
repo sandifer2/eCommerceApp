@@ -1,6 +1,5 @@
 using Library.eCommerce.Services;
 using Maui.eCommerce.ViewModels;
-using Spring2025_Samples.Models;
 
 namespace Maui.eCommerce.Views;
 

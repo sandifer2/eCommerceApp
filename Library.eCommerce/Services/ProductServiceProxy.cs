@@ -1,9 +1,9 @@
-﻿using Spring2025_Samples.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Library.eCommerce.Models;
 
 namespace Library.eCommerce.Services
 {
@@ -13,9 +13,9 @@ namespace Library.eCommerce.Services
         {
             Products = new List<Product?>
             {
-                new Product{Id = 1, Name ="Product 1", Price = 15.00, Quantity = 1},
-                new Product{Id = 2, Name ="Product 2", Price = 30.00, Quantity = 1},
-                new Product{Id = 3, Name ="Product 3", Price = 500.00, Quantity = 1}
+                new Product{Id = 1, Name ="Product 1", Price = 15.00},
+                new Product{Id = 2, Name ="Product 2", Price = 30.00},
+                new Product{Id = 3, Name ="Product 3", Price = 500.00}
             };
         }
 
