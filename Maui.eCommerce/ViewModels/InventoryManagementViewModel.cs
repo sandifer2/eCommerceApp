@@ -13,7 +13,7 @@ namespace Maui.eCommerce.ViewModels
 {
     public class InventoryManagementViewModel : INotifyPropertyChanged
     {
-        public Product? SelectedProduct { get; set; }
+        public Item? SelectedProduct { get; set; }
         public string? Query { get; set; }
         private ProductServiceProxy _svc = ProductServiceProxy.Current;
 

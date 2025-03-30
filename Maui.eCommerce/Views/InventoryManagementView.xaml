@@ -29,8 +29,7 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Text="{Binding Name}"/>
-                            <Label Grid.Column="1" Text="{Binding Price}"/>
+                            <Label Grid.Column="0" Text="{Binding Display}"/>
                             <Button Grid.Column="3" Text="Edit" Clicked = "EditRowClicked" CommandParameter="{Binding Id}"/>
                             <Button Grid.Column="4" Text="Delete" Clicked = "DeleteRowClicked" CommandParameter="{Binding Id}"/>
                         </Grid>
