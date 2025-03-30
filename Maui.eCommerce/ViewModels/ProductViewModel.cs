@@ -13,14 +13,14 @@ namespace Maui.eCommerce.ViewModels
         public string? Name { 
             get
             {
-                return Model?.Name ?? string.Empty;
+                return Model?.Product?.Name ?? string.Empty;
             }
 
             set
             {
-                if(Model != null && Model.Name != value)
+                if(Model != null && Model.Product?.Name != value)
                 {
-                    Model.Name = value;
+                    Model.Product.Name = value;
                 }
             }
         }
@@ -28,19 +28,19 @@ namespace Maui.eCommerce.ViewModels
         public double Price {
             get
             {
-                return Model?.Price ?? 0.0;
+                return Model?.Product?.Price ?? 0.0;
             }
 
             set
             {
-                if(Model != null && Model.Price != value)
+                if(Model != null && Model.Product?.Price != value)
                 {
-                    Model.Price = value;
+                    Model.Product.Price = value;
                 }
             }
         }
 
-        public Product? Model { get; set; }
+        public Item? Model { get; set; }
 
         public void AddOrUpdate()
         {
@@ -48,10 +48,10 @@ namespace Maui.eCommerce.ViewModels
         }
 
         public ProductViewModel() {
-            Model = new Product();
+            Model = new Item();
         }
 
-        public ProductViewModel(Product? model)
+        public ProductViewModel(Item? model)
         {
             Model = model;
         }

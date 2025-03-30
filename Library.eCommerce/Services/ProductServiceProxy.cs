@@ -11,11 +11,11 @@ namespace Library.eCommerce.Services
     {
         private ProductServiceProxy()
         {
-            Products = new List<Product?>
+            Products = new List<Item?>
             {
-                new Product{Id = 1, Name ="Product 1", Price = 15.00},
-                new Product{Id = 2, Name ="Product 2", Price = 30.00},
-                new Product{Id = 3, Name ="Product 3", Price = 500.00}
+                new Item{Product = new Product{Id = 1, Name ="Product 1", Price = 15.00}, Id = 1, Quantity = 1},
+                new Item{Product = new Product{Id = 2, Name ="Product 2", Price = 30.00}, Id = 2, Quantity = 2},
+                new Item{Product = new Product{Id = 3, Name ="Product 3", Price = 500.00}, Id = 3, Quantity = 3}
             };
         }
 
@@ -50,10 +50,10 @@ namespace Library.eCommerce.Services
             }
         }
 
-        public List<Product?> Products { get; private set; }
+        public List<Item?> Products { get; private set; }
 
 
-        public Product AddOrUpdate(Product product)
+        public Item AddOrUpdate(Item product)
         {
             if(product.Id == 0)
             {
@@ -65,20 +65,20 @@ namespace Library.eCommerce.Services
             return product;
         }
 
-        public Product? Delete(int id)
+        public Item? Delete(int id)
         {
             if(id == 0)
             {
                 return null;
             }
 
-            Product? product = Products.FirstOrDefault(p => p.Id == id);
+            Item? product = Products.FirstOrDefault(p => p.Id == id);
             Products.Remove(product);
 
             return product;
         }
 
-        public Product? GetById(int id)
+        public Item? GetById(int id)
         {
             return Products.FirstOrDefault(p => p.Id == id);
         }
