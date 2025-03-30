@@ -19,7 +19,7 @@ namespace Maui.eCommerce
 
         private void ShopClicked(object sender, EventArgs e)
         {
-            Shell.Current.GoToAsync("//Shop");
+            Shell.Current.GoToAsync("//ShoppingManagement");
         }
     }
 
