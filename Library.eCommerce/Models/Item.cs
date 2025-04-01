@@ -7,6 +7,10 @@ namespace Library.eCommerce.Models
         public Product Product { get; set; }
         public int? Quantity { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Product} Quantity: {Quantity}";
+        }
         public string Display
         {
             get
@@ -19,6 +23,14 @@ namespace Library.eCommerce.Models
         {
             Product = new Product();
         }
+
+        public Item(Item i)
+        {
+            Product = new Product(i.Product);
+            Quantity = i.Quantity;
+            Id = i.Id;
+        }
+        
     }
     
     
