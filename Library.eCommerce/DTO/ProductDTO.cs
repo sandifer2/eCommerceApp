@@ -1,13 +1,14 @@
-﻿namespace Library.eCommerce.Models
+namespace Library.eCommerce.DTO
 {
-    public class Product
+
+    public class ProductDTO
     {
         public int Id { get; set; }
 
         public string? Name { get; set; }
-        
-        public double Price { get; set; } = 0; 
-        
+
+        public double Price { get; set; } = 0;
+
         public string LegacyProperty1 { get; set; }
         public string LegacyProperty2 { get; set; }
         public string LegacyProperty3 { get; set; }
@@ -17,18 +18,15 @@
 
         public string? Display
         {
-            get
-            {
-                return $"{Id}. {Name}. {Price}";
-            }
+            get { return $"{Id}. {Name}. {Price}"; }
         }
 
-        public Product()
+        public ProductDTO()
         {
             Name = string.Empty;
         }
 
-        public Product(Product p)
+        public ProductDTO(ProductDTO p)
         {
             Name = p.Name;
             Id = p.Id;

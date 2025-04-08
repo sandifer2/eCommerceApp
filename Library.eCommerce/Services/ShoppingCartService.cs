@@ -65,6 +65,7 @@ namespace Library.eCommerce.Services
             {
                 return null;
             }
+            
             var itemToReturn = CartItems.FirstOrDefault(x => x.Id == item.Id);
             if (itemToReturn != null)
             {
