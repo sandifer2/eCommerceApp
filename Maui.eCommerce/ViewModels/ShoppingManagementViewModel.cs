@@ -15,12 +15,21 @@ namespace Maui.eCommerce.ViewModels
         
         
         public Item? SelectedItem { get; set; }
+        public Item? SelectedCartItem { get; set; }
         
         public ObservableCollection<Item?> Inventory
         {
             get
             {
-                return new ObservableCollection<Item?>(_invSvc.Products);
+                return new ObservableCollection<Item?>(_invSvc.Products.Where(i => i.Quantity > 0));
+            }
+        }
+
+        public ObservableCollection<Item?> ShoppingCart
+        {
+            get
+            {
+                return new ObservableCollection<Item?>(_cartSvc.CartItems.Where(i => i?.Quantity > 0));
             }
         }
 
@@ -37,16 +46,31 @@ namespace Maui.eCommerce.ViewModels
         public void PurchaseItem()
         {
             if (SelectedItem != null)
-            {
+            { 
+                var shouldRefresh = SelectedItem.Quantity >= 1;
                var updatedItem = _cartSvc.AddOrUpdate(SelectedItem);
-               if (updatedItem != null && updatedItem.Quantity > 0)
+               
+               if (updatedItem != null && shouldRefresh)
                {
                    NotifyPropertyChanged(nameof(Inventory));
+                   NotifyPropertyChanged(nameof(ShoppingCart));
                }
-               
-
             }
+        }
 
+        public void ReturnItem()
+        {
+            if (SelectedItem != null)
+            {
+                var shouldRefresh = SelectedCartItem.Quantity >= 1;
+                var updatedItem = _cartSvc.ReturnItem(SelectedCartItem);
+
+                if (updatedItem != null && shouldRefresh)
+                {
+                    NotifyPropertyChanged(nameof(Inventory));
+                    NotifyPropertyChanged(nameof(ShoppingCart));
+                }
+            }
         }
     }
 }

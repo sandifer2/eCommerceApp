@@ -91,6 +91,20 @@ namespace Library.eCommerce.Services
             return Products.FirstOrDefault(p => p.Id == id);
         }
 
+        public Item? PurchaseItem(Item? item)
+        {
+            if (item?.Id <= 0 || item == null)
+            {
+                return null;
+            }
+            var itemToPurchase = GetById(item.Id);
+            if (itemToPurchase != null)
+            {
+                itemToPurchase.Quantity--;
+            }
+            return itemToPurchase;
+        }
+
     }
 
     

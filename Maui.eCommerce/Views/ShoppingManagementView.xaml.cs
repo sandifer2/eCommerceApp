@@ -21,4 +21,9 @@ public partial class ShoppingManagementView : ContentPage
     {
         (BindingContext as ShoppingManagementViewModel).PurchaseItem();
     }
+    
+    private void RemoveFromCartClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ShoppingManagementViewModel).ReturnItem();
+    }
 }
