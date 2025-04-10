@@ -1,4 +1,6 @@
-﻿namespace Library.eCommerce.Models
+﻿using Library.eCommerce.DTO;
+
+namespace Library.eCommerce.Models
 {
     public class Product
     {
@@ -38,6 +40,20 @@
         public override string ToString()
         {
             return Display ?? string.Empty;
+        }
+        
+        public Product(ProductDTO p)
+        {
+            Name = p.Name;
+            Id = p.Id;
+            Price = p.Price;
+            LegacyProperty1 = string.Empty;
+            LegacyProperty2 = string.Empty;
+            LegacyProperty3 = string.Empty;
+            LegacyProperty4 = string.Empty;
+            LegacyProperty5 = string.Empty;
+            LegacyProperty6 = string.Empty;
+
         }
     }
 }

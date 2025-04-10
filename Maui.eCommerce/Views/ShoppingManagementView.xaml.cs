@@ -12,7 +12,6 @@ public partial class ShoppingManagementView : ContentPage
 {
     public ShoppingManagementView()
     {
-        
         InitializeComponent();
         BindingContext = new ShoppingManagementViewModel();
     }

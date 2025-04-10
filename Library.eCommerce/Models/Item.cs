@@ -30,7 +30,7 @@ namespace Library.eCommerce.Models
             Product = new ProductDTO();
             Quantity = 0;
             
-            AddCommand = null;
+            AddCommand = new Command(DoAdd);
         }
 
         private void DoAdd()

@@ -1,3 +1,5 @@
+using Library.eCommerce.Models;
+
 namespace Library.eCommerce.DTO
 {
 
@@ -25,6 +27,16 @@ namespace Library.eCommerce.DTO
         {
             Name = string.Empty;
         }
+
+        public ProductDTO(Product p)
+        {
+            Name = p.Name;
+            Id = p.Id;
+            
+            
+        }
+        
+        
 
         public ProductDTO(ProductDTO p)
         {

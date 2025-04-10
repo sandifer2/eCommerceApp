@@ -60,7 +60,7 @@ namespace Maui.eCommerce.ViewModels
 
         public void ReturnItem()
         {
-            if (SelectedItem != null)
+            if (SelectedCartItem != null)
             {
                 var shouldRefresh = SelectedCartItem.Quantity >= 1;
                 var updatedItem = _cartSvc.ReturnItem(SelectedCartItem);
