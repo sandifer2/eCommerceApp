@@ -1,6 +1,7 @@
 
 using System.Windows.Input;
 using Library.eCommerce.DTO;
+using Library.eCommerce.Services;
 using Microsoft.Maui.Controls;
 
 namespace Library.eCommerce.Models
@@ -34,8 +35,8 @@ namespace Library.eCommerce.Models
         }
 
         private void DoAdd()
-        {
-            
+        { 
+            ShoppingCartService.Current.AddOrUpdate(this);
         }
         
         public Item(Item i)

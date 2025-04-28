@@ -58,6 +58,14 @@ namespace Maui.eCommerce.ViewModels
             }
         }
 
+        public void RefreshUX()
+        {
+            NotifyPropertyChanged(nameof(Inventory));
+            NotifyPropertyChanged(nameof(ShoppingCart));
+            
+        }
+        
+        
         public void ReturnItem()
         {
             if (SelectedCartItem != null)

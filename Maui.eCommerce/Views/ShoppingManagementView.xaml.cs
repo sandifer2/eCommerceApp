@@ -25,4 +25,9 @@ public partial class ShoppingManagementView : ContentPage
     {
         (BindingContext as ShoppingManagementViewModel).ReturnItem();
     }
+
+    private void InlineAddClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ShoppingManagementViewModel).RefreshUX();
+    }
 }
