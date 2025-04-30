@@ -61,12 +61,13 @@ public partial class InventoryManagementView : ContentPage
         (BindingContext as InventoryManagementViewModel)?.RefreshProductList();
     }
     
-    private void EditRowClicked(object sender, EventArgs e)
+    private async void EditRowClicked(object sender, EventArgs e)
     {
-        // Get the product ID from the button's CommandParameter
+        
         if (sender is Button button && button.CommandParameter is int productId)
         {
-            Shell.Current.GoToAsync($"//Product?productId={productId}");
+            Console.WriteLine($"Edit row clicked with ID: {productId}");
+            await Shell.Current.GoToAsync($"Product?productId={productId}");
         }
     }
 
