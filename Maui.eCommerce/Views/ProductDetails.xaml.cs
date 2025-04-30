@@ -29,6 +29,8 @@ public partial class ProductDetails : ContentPage
 
     private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
     {
+        Console.WriteLine("Editing with ID: " + ProductId);
+        
         if(ProductId == 0)
         {
             BindingContext = new ProductViewModel();

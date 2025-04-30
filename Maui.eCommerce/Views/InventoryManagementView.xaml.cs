@@ -31,16 +31,29 @@ public partial class InventoryManagementView : ContentPage
         (BindingContext as InventoryManagementViewModel)?.RefreshProductList();
     }
 
-    private void EditClicked(object sender, EventArgs e)
-    {//TODO: ?????????????
-        var productId = (BindingContext as InventoryManagementViewModel)?.SelectedProduct?.Id;
-        if (productId == null)
+    // private void EditClicked(object sender, EventArgs e)
+    // {
+    //     var productId = (BindingContext as InventoryManagementViewModel)?.SelectedProduct?.Id;
+    //     if (productId == null)
+    //     {
+    //         DisplayAlert("Selection required", "Please select a product to edit.", "OK");
+    //         return;
+    //     }
+    //     Console.WriteLine($"Edit product with ID: {productId}");
+    //     Shell.Current.GoToAsync($"//Product?productId={productId}");
+    // }
+    private async void EditClicked(object sender, EventArgs e)
+    {
+        var id = (BindingContext as InventoryManagementViewModel)?.SelectedProduct?.Id;
+        if (!id.HasValue)
         {
-            DisplayAlert("Selection required", "Please select a product to edit.", "OK");
+            await DisplayAlert("Selection required", "Please select a product to edit.", "OK");
             return;
         }
-        
-        Shell.Current.GoToAsync($"//Product?productId={productId}");
+
+        Console.WriteLine($"Edit product with ID: {id}");
+        // relative route → forces a new ProductDetails instance
+        await Shell.Current.GoToAsync($"Product?productId={id}");
     }
 
     private void SearchClicked(object sender, EventArgs e)
