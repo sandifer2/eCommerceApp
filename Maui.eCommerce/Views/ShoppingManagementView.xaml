@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maui.eCommerce.Views.ShoppingManagementView"
              Title="ShoppingManagementView">
-    <Grid>
+    <Grid>   
         <Grid.ColumnDefinitions>
             <ColumnDefinition/><!--Store-->
             <ColumnDefinition/><!--Shopping Cart-->
@@ -17,10 +17,8 @@
            </Grid.RowDefinitions> 
            <ListView Grid.Row="0"
                ItemsSource="{Binding Inventory}"
-               SelectedItem="{Binding SelectedItem}"
-               >
+               SelectedItem="{Binding SelectedItem}">
                <ListView.ItemTemplate>
-                   
                        <DataTemplate>
                            <ViewCell>
                            <Grid>
@@ -39,21 +37,20 @@
                            </Grid>
                            </ViewCell>
                        </DataTemplate>
-                       
                </ListView.ItemTemplate>  
            </ListView>
-           <Button Grid.Row="1" Text="+" Clicked="AddToCartClicked"/>
+           <Button Grid.Row="1" Text="+" Clicked="AddToCartClicked"/> 
        </Grid>    
         <!-- Shopping Cart-->
         <Grid Grid.Column = "1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="10*"/>
+                <RowDefinition Height="8*"/>
                 <RowDefinition />
+                <RowDefinition/>
             </Grid.RowDefinitions>  
             <ListView Grid.Row="0"
                       ItemsSource="{Binding ShoppingCart}"
-                      SelectedItem="{Binding SelectedCartItem}"
-            >
+                      SelectedItem="{Binding SelectedCartItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -72,10 +69,17 @@
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
-                       
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Grid.Row="1" Text="-" Clicked="RemoveFromCartClicked"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column ="0" Text="+" Clicked="AddToCartClicked"/>
+                <Button Grid.Column = "1" Text="-" Clicked="RemoveFromCartClicked"/>
         </Grid>
+            <Button Grid.Row="2" Text="Checkout" Clicked="CheckoutClicked"/>
+         </Grid>   
     </Grid>         
 </ContentPage>

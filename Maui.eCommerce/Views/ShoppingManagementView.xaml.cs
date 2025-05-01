@@ -30,4 +30,9 @@ public partial class ShoppingManagementView : ContentPage
     {
         (BindingContext as ShoppingManagementViewModel).RefreshUX();
     }
+
+    private void CheckoutClicked(object? sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
 }
