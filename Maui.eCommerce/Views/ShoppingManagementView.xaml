@@ -33,9 +33,9 @@
                                </Grid.ColumnDefinitions>
                                <Label Grid.Column="0" Text="{Binding Id}"/>
                                <Label Grid.Column="1" Text="{Binding Product.Name}"/>
-                               <Label Grid.Column="2" Text="x"/>
+                               <Label Grid.Column="2" Text="{Binding Product.Price,StringFormat='${0:F2}'}"/>
                                <Label Grid.Column="3" Text="{Binding Quantity}"/>
-                                <Button Grid.Column="4" Text="+" Command = "{Binding AddCommand}" Clicked="InlineAddClicked" />
+                               <Button Grid.Column="4" Text="+" Command = "{Binding AddCommand}" Clicked="InlineAddClicked" />
                            </Grid>
                            </ViewCell>
                        </DataTemplate>
@@ -57,7 +57,19 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Label Text = "{Binding Display}"/>
+                            <Grid Padding="5.5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding Id}"/>
+                                <Label Grid.Column="1" Text="{Binding Product.Name}"/>
+                                <Label Grid.Column="2" Text="{Binding Product.Price,StringFormat='${0:F2}'}"/>
+                                <Label Grid.Column="3" Text="{Binding Quantity}"/>
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                        
