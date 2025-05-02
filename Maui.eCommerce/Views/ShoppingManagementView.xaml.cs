@@ -31,8 +31,13 @@ public partial class ShoppingManagementView : ContentPage
         (BindingContext as ShoppingManagementViewModel).RefreshUX();
     }
 
-    private void CheckoutClicked(object? sender, EventArgs e)
+    private  async void CheckoutClicked(object? sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        var viewModel = BindingContext as ShoppingManagementViewModel;
+        if (viewModel != null)
+        {
+            string receipt = await viewModel.GenerateReceipt();
+            await DisplayAlert("Receipt", receipt, "OK");
+        }
     }
 }
