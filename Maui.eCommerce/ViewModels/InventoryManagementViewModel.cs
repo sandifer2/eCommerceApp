@@ -19,9 +19,6 @@ namespace Maui.eCommerce.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
         
-        public SortOption CurrentSortOption { get; set; } = SortOption.Name;
-        public SortDirection CurrentSortDirection { get; set; } = SortDirection.Ascending;
-
         
         public enum SortOption
         {
@@ -34,6 +31,9 @@ namespace Maui.eCommerce.ViewModels
             Ascending,
             Descending
         }
+        
+        public SortOption CurrentSortOption { get; set; } = SortOption.Name;
+        public SortDirection CurrentSortDirection { get; set; } = SortDirection.Ascending;
         
         
         public void SortProducts(SortOption option)

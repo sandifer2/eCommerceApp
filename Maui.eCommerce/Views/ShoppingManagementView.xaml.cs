@@ -51,4 +51,14 @@ public partial class ShoppingManagementView : ContentPage
         (BindingContext as ShoppingManagementViewModel)?.RefreshUX();
 
     }
+
+    private void SortByNameClicked(object? sender, EventArgs e)
+    {
+        (BindingContext as ShoppingManagementViewModel)?.SortProducts(ShoppingManagementViewModel.SortOption.Name);
+    }
+
+    private void SortByPriceClicked(object? sender, EventArgs e)
+    {
+        (BindingContext as ShoppingManagementViewModel)?.SortProducts(ShoppingManagementViewModel.SortOption.Price);
+    }
 }

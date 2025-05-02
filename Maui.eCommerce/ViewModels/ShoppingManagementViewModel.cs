@@ -14,6 +14,21 @@ namespace Maui.eCommerce.ViewModels
         
         public event PropertyChangedEventHandler? PropertyChanged;
         
+        public enum SortOption
+        {
+            Name,
+            Price
+        }
+
+        public enum SortDirection
+        {
+            Ascending,
+            Descending
+        }
+        
+        public SortOption CurrentSortOption { get; set; } = SortOption.Name;
+        public SortDirection CurrentSortDirection { get; set; } = SortDirection.Ascending;
+
         
         public Item? SelectedItem { get; set; }
         public Item? SelectedCartItem { get; set; }
@@ -22,7 +37,22 @@ namespace Maui.eCommerce.ViewModels
         {
             get
             {
-                return new ObservableCollection<Item?>(_invSvc.Products.Where(i => i.Quantity > 0));
+                var items = _invSvc.Products.Where(i => i.Quantity > 0);
+                
+                if (CurrentSortOption == SortOption.Name)
+                {
+                    items = CurrentSortDirection == SortDirection.Ascending
+                        ? items.OrderBy(p => p?.Product?.Name)
+                        : items.OrderByDescending(p => p?.Product?.Name);
+                }
+                else if (CurrentSortOption == SortOption.Price)
+                {
+                    items = CurrentSortDirection == SortDirection.Ascending
+                        ? items.OrderBy(p => p?.Product?.Price)
+                        : items.OrderByDescending(p => p?.Product?.Price);
+                }
+        
+                return new ObservableCollection<Item?>(items);
             }
         }
 
@@ -30,8 +60,24 @@ namespace Maui.eCommerce.ViewModels
         {
             get
             {
-                return new ObservableCollection<Item?>(_cartSvc.CartItems.Where(i => i?.Quantity > 0));
+                var items = _cartSvc.CartItems.Where(i => i?.Quantity > 0);
+                
+                if (CurrentSortOption == SortOption.Name)
+                {
+                    items = CurrentSortDirection == SortDirection.Ascending
+                        ? items.OrderBy(p => p?.Product?.Name)
+                        : items.OrderByDescending(p => p?.Product?.Name);
+                }
+                else if (CurrentSortOption == SortOption.Price)
+                {
+                    items = CurrentSortDirection == SortDirection.Ascending
+                        ? items.OrderBy(p => p?.Product?.Price)
+                        : items.OrderByDescending(p => p?.Product?.Price);
+                }
+        
+                return new ObservableCollection<Item?>(items);
             }
+            
         }
 
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -117,6 +163,24 @@ namespace Maui.eCommerce.ViewModels
                     NotifyPropertyChanged(nameof(ShoppingCart));
                 }
             }
+        }
+        
+        public void SortProducts(SortOption option)
+        {
+            if (option == CurrentSortOption)
+            {
+                CurrentSortDirection = CurrentSortDirection == SortDirection.Ascending 
+                    ? SortDirection.Descending 
+                    : SortDirection.Ascending;
+            }
+            else
+            {
+                CurrentSortOption = option;
+                CurrentSortDirection = SortDirection.Ascending;
+            }
+            
+            NotifyPropertyChanged(nameof(Inventory));
+            NotifyPropertyChanged(nameof(ShoppingCart));
         }
     }
 }
