@@ -103,4 +103,15 @@ public partial class InventoryManagementView : ContentPage
             }
         }
     }
+
+    private void SortByNameClicked(object? sender, EventArgs e)
+    {
+        (BindingContext as InventoryManagementViewModel)?.SortProducts(InventoryManagementViewModel.SortOption.Name);
+    }
+
+    private void SortByPriceClicked(object? sender, EventArgs e)
+    {
+        (BindingContext as InventoryManagementViewModel)?.SortProducts(InventoryManagementViewModel.SortOption.Price);
+
+    }
 }
