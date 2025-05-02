@@ -45,4 +45,10 @@ public partial class ShoppingManagementView : ContentPage
     {
         Shell.Current.GoToAsync("//MainPage");
     }
+
+    private void ContentPage_NavigatedTo(object? sender, NavigatedToEventArgs e)
+    {
+        (BindingContext as ShoppingManagementViewModel)?.RefreshUX();
+
+    }
 }
