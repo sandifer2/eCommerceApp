@@ -26,6 +26,46 @@ namespace Maui.eCommerce.ViewModels
             Descending
         }
         
+        private string newCartName = string.Empty;
+        
+        public string NewCartName
+        {
+            get { return newCartName; }
+            set
+            {
+                if (newCartName != value)
+                {
+                    newCartName = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        
+        public string CurrentCartName
+        {
+            get { return _cartSvc.CurrentCartName; }
+        }
+        
+        public ObservableCollection<string> CartNames
+        {
+            get { return new ObservableCollection<string>(_cartSvc.CartNames); }
+        }
+        
+        private string selectedCartName = string.Empty;
+        
+        public string SelectedCartName
+        {
+            get { return selectedCartName; }
+            set
+            {
+                if (selectedCartName != value)
+                {
+                    selectedCartName = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        
         public SortOption CurrentSortOption { get; set; } = SortOption.Name;
         public SortDirection CurrentSortDirection { get; set; } = SortDirection.Ascending;
 
@@ -77,7 +117,6 @@ namespace Maui.eCommerce.ViewModels
         
                 return new ObservableCollection<Item?>(items);
             }
-            
         }
 
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -95,13 +134,12 @@ namespace Maui.eCommerce.ViewModels
             if (SelectedItem != null)
             { 
                 var shouldRefresh = SelectedItem.Quantity >= 1;
-               var updatedItem = _cartSvc.AddOrUpdate(SelectedItem);
+                var updatedItem = _cartSvc.AddOrUpdate(SelectedItem);
                
-               if (updatedItem != null && shouldRefresh)
-               {
-                   NotifyPropertyChanged(nameof(Inventory));
-                   NotifyPropertyChanged(nameof(ShoppingCart));
-               }
+                if (updatedItem != null && shouldRefresh)
+                {
+                    RefreshUX();
+                }
             }
         }
 
@@ -109,9 +147,42 @@ namespace Maui.eCommerce.ViewModels
         {
             NotifyPropertyChanged(nameof(Inventory));
             NotifyPropertyChanged(nameof(ShoppingCart));
-            
+            NotifyPropertyChanged(nameof(CartNames));
+            NotifyPropertyChanged(nameof(CurrentCartName));
         }
         
+        public bool CreateNewCart()
+        {
+            if (string.IsNullOrWhiteSpace(NewCartName))
+            {
+                return false;
+            }
+            
+            bool result = _cartSvc.CreateCart(NewCartName);
+            if (result)
+            {
+                RefreshUX();
+                NewCartName = string.Empty;
+            }
+            
+            return result;
+        }
+        
+        public bool SwitchCart()
+        {
+            if (string.IsNullOrWhiteSpace(SelectedCartName))
+            {
+                return false;
+            }
+            
+            bool result = _cartSvc.SwitchCart(SelectedCartName);
+            if (result)
+            {
+                RefreshUX();
+            }
+            
+            return result;
+        }
         
         public async Task<string> GenerateReceipt()
         {
@@ -124,7 +195,7 @@ namespace Maui.eCommerce.ViewModels
             double? subtotal = 0;
 
             StringBuilder receipt = new StringBuilder();
-            receipt.AppendLine("=== Receipt ===");
+            receipt.AppendLine($"=== Receipt for {CurrentCartName} ===");
             receipt.AppendLine();
             receipt.AppendLine("Items:");
 
@@ -148,8 +219,6 @@ namespace Maui.eCommerce.ViewModels
             return receipt.ToString();
         }
         
-        
-        
         public void ReturnItem()
         {
             if (SelectedCartItem != null)
@@ -159,8 +228,7 @@ namespace Maui.eCommerce.ViewModels
 
                 if (updatedItem != null && shouldRefresh)
                 {
-                    NotifyPropertyChanged(nameof(Inventory));
-                    NotifyPropertyChanged(nameof(ShoppingCart));
+                    RefreshUX();
                 }
             }
         }

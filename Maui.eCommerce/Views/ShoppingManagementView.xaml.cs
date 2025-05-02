@@ -14,13 +14,14 @@ public partial class ShoppingManagementView : ContentPage
     {
         InitializeComponent();
         BindingContext = new ShoppingManagementViewModel();
+        
     }
 
     private void AddToCartClicked(object sender, EventArgs e)
     {
         (BindingContext as ShoppingManagementViewModel).PurchaseItem();
     }
-    
+
     private void RemoveFromCartClicked(object sender, EventArgs e)
     {
         (BindingContext as ShoppingManagementViewModel).ReturnItem();
@@ -31,7 +32,7 @@ public partial class ShoppingManagementView : ContentPage
         (BindingContext as ShoppingManagementViewModel).RefreshUX();
     }
 
-    private  async void CheckoutClicked(object? sender, EventArgs e)
+    private async void CheckoutClicked(object? sender, EventArgs e)
     {
         var viewModel = BindingContext as ShoppingManagementViewModel;
         if (viewModel != null)
@@ -60,5 +61,44 @@ public partial class ShoppingManagementView : ContentPage
     private void SortByPriceClicked(object? sender, EventArgs e)
     {
         (BindingContext as ShoppingManagementViewModel)?.SortProducts(ShoppingManagementViewModel.SortOption.Price);
+    }
+
+    private async void CreateCartClicked(object sender, EventArgs e)
+    {
+        var viewModel = BindingContext as ShoppingManagementViewModel;
+        if (viewModel != null)
+        {
+            bool success = viewModel.CreateNewCart();
+            if (!success)
+            {
+                await DisplayAlert("Error",
+                    "Failed to create new cart. Please check if the name is valid or already exists.", "OK");
+            }
+        }
+    }
+
+    private async void SwitchCartClicked(object sender, EventArgs e)
+    {
+        var viewModel = BindingContext as ShoppingManagementViewModel;
+        if (viewModel != null)
+        {
+            bool success = viewModel.SwitchCart();
+            if (!success)
+            {
+                await DisplayAlert("Error", "Failed to switch cart. Please select a valid cart.", "OK");
+            }
+        }
+    }
+
+    private void Picker_SelectedIndexChanged(object? sender, EventArgs e)
+    {
+        if (sender is Picker picker && picker.SelectedItem != null)
+        {
+            var viewModel = BindingContext as ShoppingManagementViewModel;
+            if (viewModel != null)
+            {
+                viewModel.SelectedCartName = picker.SelectedItem.ToString();
+            }
+        }
     }
 }
