@@ -40,4 +40,9 @@ public partial class ShoppingManagementView : ContentPage
             await DisplayAlert("Receipt", receipt, "OK");
         }
     }
+
+    private void BackToHomeClicked(object? sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//MainPage");
+    }
 }
