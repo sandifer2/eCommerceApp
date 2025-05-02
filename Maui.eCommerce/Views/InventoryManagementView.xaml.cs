@@ -1,4 +1,5 @@
 using Library.eCommerce.Services;
+using Library.eCommerce.Models;
 using Maui.eCommerce.ViewModels;
 
 namespace Maui.eCommerce.Views;
@@ -31,17 +32,7 @@ public partial class InventoryManagementView : ContentPage
         (BindingContext as InventoryManagementViewModel)?.RefreshProductList();
     }
 
-    // private void EditClicked(object sender, EventArgs e)
-    // {
-    //     var productId = (BindingContext as InventoryManagementViewModel)?.SelectedProduct?.Id;
-    //     if (productId == null)
-    //     {
-    //         DisplayAlert("Selection required", "Please select a product to edit.", "OK");
-    //         return;
-    //     }
-    //     Console.WriteLine($"Edit product with ID: {productId}");
-    //     Shell.Current.GoToAsync($"//Product?productId={productId}");
-    // }
+    
     private async void EditClicked(object sender, EventArgs e)
     {
         var id = (BindingContext as InventoryManagementViewModel)?.SelectedProduct?.Id;
@@ -52,7 +43,7 @@ public partial class InventoryManagementView : ContentPage
         }
 
         Console.WriteLine($"Edit product with ID: {id}");
-        // relative route → forces a new ProductDetails instance
+        
         await Shell.Current.GoToAsync($"Product?productId={id}");
     }
 
@@ -81,6 +72,42 @@ public partial class InventoryManagementView : ContentPage
         
             // Refresh the list after deletion
             (BindingContext as InventoryManagementViewModel)?.RefreshProductList();
+        }
+    }
+    
+    private async void AddToCartClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.CommandParameter is Item item)
+        {
+            // Find the parent ViewCell to access the quantity entry
+            var parent = button.Parent as Grid;
+            var entry = parent?.Children.FirstOrDefault(c => c is Entry) as Entry;
+        
+            if (entry != null && int.TryParse(entry.Text, out int quantity) && quantity > 0)
+            {
+                // Check if there's enough stock
+                if (item.Quantity >= quantity)
+                {
+                    // Add to cart
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        ShoppingCartService.Current.AddOrUpdate(item);
+                    }
+                
+                    // Refresh the list
+                    (BindingContext as InventoryManagementViewModel)?.RefreshProductList();
+                
+                    await DisplayAlert("Added to Cart", $"{quantity} {item.Product.Name} added to cart", "OK");
+                }
+                else
+                {
+                    await DisplayAlert("Insufficient Stock", $"Only {item.Quantity} items available", "OK");
+                }
+            }
+            else
+            {
+                await DisplayAlert("Invalid Quantity", "Please enter a valid quantity", "OK");
+            }
         }
     }
 }

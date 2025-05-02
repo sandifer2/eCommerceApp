@@ -23,15 +23,17 @@
                     <ViewCell>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6*"/>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Text="{Binding Display}"/>
-                            <Button Grid.Column="3" Text="Edit" Clicked = "EditRowClicked" CommandParameter="{Binding Id}"/>
-                            <Button Grid.Column="4" Text="Delete" Clicked = "DeleteRowClicked" CommandParameter="{Binding Id}"/>
+                            <Label Grid.Column="0" Text="{Binding Display}" VerticalOptions="Center"/>
+                            <Entry Grid.Column="1" Text="1" x:Name="QuantityEntry" Keyboard="Numeric" VerticalOptions="Center"/>
+                            <Button Grid.Column="2" Text="+" Clicked="AddToCartClicked" CommandParameter="{Binding}"/>
+                            <Button Grid.Column="3" Text="Edit" Clicked="EditRowClicked" CommandParameter="{Binding Id}"/>
+                            <Button Grid.Column="4" Text="Delete" Clicked="DeleteRowClicked" CommandParameter="{Binding Id}"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
