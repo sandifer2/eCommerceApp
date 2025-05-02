@@ -64,13 +64,9 @@ public partial class InventoryManagementView : ContentPage
 
     private void DeleteRowClicked(object sender, EventArgs e)
     {
-        // Get the product ID from the button's CommandParameter
         if (sender is Button button && button.CommandParameter is int productId)
         {
-            // Delete the product directly
             ProductServiceProxy.Current.Delete(productId);
-        
-            // Refresh the list after deletion
             (BindingContext as InventoryManagementViewModel)?.RefreshProductList();
         }
     }
@@ -79,22 +75,19 @@ public partial class InventoryManagementView : ContentPage
     {
         if (sender is Button button && button.CommandParameter is Item item)
         {
-            // Find the parent ViewCell to access the quantity entry
             var parent = button.Parent as Grid;
             var entry = parent?.Children.FirstOrDefault(c => c is Entry) as Entry;
         
             if (entry != null && int.TryParse(entry.Text, out int quantity) && quantity > 0)
             {
-                // Check if there's enough stock
+                
                 if (item.Quantity >= quantity)
                 {
-                    // Add to cart
                     for (int i = 0; i < quantity; i++)
                     {
                         ShoppingCartService.Current.AddOrUpdate(item);
                     }
-                
-                    // Refresh the list
+                    
                     (BindingContext as InventoryManagementViewModel)?.RefreshProductList();
                 
                     await DisplayAlert("Added to Cart", $"{quantity} {item.Product.Name} added to cart", "OK");

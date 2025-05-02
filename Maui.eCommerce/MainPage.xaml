@@ -4,17 +4,44 @@
              x:Class="Maui.eCommerce.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout Spacing="15" Padding="20">
             <Label
                 Text="{Binding Display}"
-                />
+                FontSize="24"
+                HorizontalOptions="Center"
+                Margin="0,0,0,20"/>
+                
+            <Label
+                Text="Set Tax Rate (%):"
+                FontSize="16"/>
+                
+            <Grid ColumnDefinitions="2*, 3*">
+                <Entry 
+                    x:Name="TaxRateEntry"
+                    Grid.Column="0"
+                    Text="{Binding TaxRateText}"
+                    Keyboard="Numeric"
+                    Completed="TaxRateEntry_Completed"/>
+                    
+                <Button 
+                    Grid.Column="1"
+                    Text="Apply Tax Rate"
+                    Clicked="ApplyTaxRate_Clicked"/>
+            </Grid>
+            
+            <Label 
+                Text="{Binding TaxRateDisplay}"
+                Margin="0,5,0,20"/>
+                
             <Button
-            Text="Inventory Management"
-                Clicked="InventoryClicked"/>
+                Text="Inventory Management"
+                Clicked="InventoryClicked"
+                Margin="0,10,0,5"/>
+                
             <Button
-            Text="Shop"
-                Clicked="ShopClicked"/>
+                Text="Shop"
+                Clicked="ShopClicked"
+                Margin="0,5,0,0"/>
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

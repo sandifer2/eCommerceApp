@@ -66,40 +66,42 @@ namespace Maui.eCommerce.ViewModels
             
         }
         
+        
         public async Task<string> GenerateReceipt()
         {
             if (!ShoppingCart.Any())
             {
                 return "Your cart is empty.";
             }
-    
-            const double taxRate = 0.07; // 7% sales tax
+
+            double taxRate = TaxRateService.Current.TaxRate; 
             double? subtotal = 0;
-    
+
             StringBuilder receipt = new StringBuilder();
             receipt.AppendLine("=== Receipt ===");
             receipt.AppendLine();
             receipt.AppendLine("Items:");
-    
+
             foreach (var item in ShoppingCart)
             {
                 double? itemTotal = item.Product.Price * item.Quantity;
                 subtotal += itemTotal;
                 receipt.AppendLine($"{item.Product.Name} - ${item.Product.Price:F2} x {item.Quantity} = ${itemTotal:F2}");
             }
-    
+
             double? tax = subtotal * taxRate;
             double? total = subtotal + tax;
-    
+
             receipt.AppendLine();
             receipt.AppendLine($"Subtotal: ${subtotal:F2}");
-            receipt.AppendLine($"Tax (7%): ${tax:F2}");
+            receipt.AppendLine($"Tax ({taxRate:P0}): ${tax:F2}"); 
             receipt.AppendLine($"Total: ${total:F2}");
             receipt.AppendLine();
             receipt.AppendLine("Thank you for shopping with us!");
-    
+
             return receipt.ToString();
         }
+        
         
         
         public void ReturnItem()
