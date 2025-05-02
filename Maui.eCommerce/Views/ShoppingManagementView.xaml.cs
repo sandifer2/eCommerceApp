@@ -82,23 +82,70 @@ public partial class ShoppingManagementView : ContentPage
         var viewModel = BindingContext as ShoppingManagementViewModel;
         if (viewModel != null)
         {
+            Console.WriteLine($"SwitchCartClicked with SelectedCartName: '{viewModel.SelectedCartName}'");
+        
+            if (string.IsNullOrWhiteSpace(viewModel.SelectedCartName))
+            {
+                await DisplayAlert("No Cart Selected", "Please select a cart from the dropdown first", "OK");
+                return;
+            }
+        
             bool success = viewModel.SwitchCart();
+        
             if (!success)
             {
                 await DisplayAlert("Error", "Failed to switch cart. Please select a valid cart.", "OK");
             }
+            else
+            {
+                await DisplayAlert("Success", $"Switched to cart: {viewModel.CurrentCartName}", "OK");
+            }
+        }
+        else
+        {
+            Console.WriteLine("ViewModel is null in SwitchCartClicked!");
         }
     }
 
-    private void Picker_SelectedIndexChanged(object? sender, EventArgs e)
+    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (sender is Picker picker && picker.SelectedItem != null)
+        Console.WriteLine("Picker_SelectedIndexChanged triggered");
+        if (sender is Picker picker)
         {
-            var viewModel = BindingContext as ShoppingManagementViewModel;
-            if (viewModel != null)
+        
+            if (picker.SelectedItem != null)
             {
-                viewModel.SelectedCartName = picker.SelectedItem.ToString();
+                var viewModel = BindingContext as ShoppingManagementViewModel;
+                if (viewModel != null)
+                {
+                    Console.WriteLine($"Setting ViewModel.SelectedCartName to: {picker.SelectedItem}");
+                    viewModel.SelectedCartName = picker.SelectedItem.ToString();
+                }
+                else
+                {
+                    Console.WriteLine("ViewModel is null!");
+                }
             }
+        }
+    }
+
+    private async void ShowCartSelectionClicked(object sender, EventArgs e)
+    {
+        var viewModel = BindingContext as ShoppingManagementViewModel;
+        if (viewModel != null && viewModel.CartNames.Any())
+        {
+            string selection = await DisplayActionSheet("Select a Cart", "Cancel", null, 
+                viewModel.CartNames.ToArray());
+        
+            if (!string.IsNullOrWhiteSpace(selection) && selection != "Cancel")
+            {
+                Console.WriteLine($"Selected cart from popup: {selection}");
+                viewModel.SelectedCartName = selection;
+            }
+        }
+        else
+        {
+            await DisplayAlert("No Carts", "No carts available to select", "OK");
         }
     }
 }
