@@ -136,10 +136,9 @@ namespace Maui.eCommerce.ViewModels
                 var shouldRefresh = SelectedItem.Quantity >= 1;
                 var updatedItem = _cartSvc.AddOrUpdate(SelectedItem);
                
-                if (updatedItem != null && shouldRefresh)
-                {
+                
                     RefreshUX();
-                }
+                
             }
         }
 
