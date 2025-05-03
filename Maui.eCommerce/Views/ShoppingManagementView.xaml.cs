@@ -38,7 +38,15 @@ public partial class ShoppingManagementView : ContentPage
         if (viewModel != null)
         {
             string receipt = await viewModel.GenerateReceipt();
-            await DisplayAlert("Receipt", receipt, "OK");
+            
+            bool exitApp = await DisplayAlert("Receipt", 
+                receipt + "\n\nThank you for your purchase!", 
+                "Exit Application", "Continue Shopping");
+            
+            if (exitApp)
+            {
+                Application.Current?.Quit();
+            }
         }
     }
 
