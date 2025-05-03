@@ -77,19 +77,18 @@ public partial class InventoryManagementView : ContentPage
         {
             var parent = button.Parent as Grid;
             var entry = parent?.Children.FirstOrDefault(c => c is Entry) as Entry;
-        
+    
             if (entry != null && int.TryParse(entry.Text, out int quantity) && quantity > 0)
-            {
-                
+            {   
                 if (item.Quantity >= quantity)
                 {
                     for (int i = 0; i < quantity; i++)
                     {
                         ShoppingCartService.Current.AddOrUpdate(item);
                     }
-                    
-                    (BindingContext as InventoryManagementViewModel)?.RefreshProductList();
                 
+                    (BindingContext as InventoryManagementViewModel)?.RefreshProductList();
+            
                     await DisplayAlert("Added to Cart", $"{quantity} {item.Product.Name} added to cart", "OK");
                 }
                 else
